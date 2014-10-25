@@ -13,6 +13,8 @@ name 'Image-Select';
 readme_from 'Select.pm';
 requires 'Class::Utils' => 0.03;
 requires 'Error::Pure' => 0.11;
+requires 'File::Find::Rule' => 0;
+requires 'File::Find::Rule::MMagic' => 0;
 requires 'File::Basename' => 0;
 requires 'Imager' => 0;
 requires 'List::MoreUtils' => 0;
@@ -28,7 +30,7 @@ test_requires 'Test::NoWarnings' => 0;
 test_requires 'Test::Pod' => 0;
 test_requires 'Test::Pod::Coverage' => 0;
 tests_recursive;
-version '0.01';
+version '0.02';
 
 # Run.
 WriteAll();

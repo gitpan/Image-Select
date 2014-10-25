@@ -13,7 +13,7 @@ use Imager;
 use List::MoreUtils qw(none);
 
 # Version.
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 # Constructor.
 sub new {
@@ -44,6 +44,13 @@ sub new {
 	# Check type.
 	if (defined $self->{'type'}) {
 		$self->_check_type($self->{'type'});
+	}
+
+	# Check path to images.
+	if (! defined $self->{'path_to_images'}
+		|| ! -d $self->{'path_to_images'}) {
+
+		err "Parameter 'path_to_images' is required.";
 	}
 
 	# Load images.
@@ -167,7 +174,7 @@ sub _check_type {
 	if (none { $type eq $_ } ('bmp', 'gif', 'jpeg', 'png',
 		'pnm', 'raw', 'sgi', 'tga', 'tiff')) {
 
-		err "Suffix '$type' doesn't supported.";
+		err "Image type '$type' doesn't supported.";
 	}
 
 	return;
@@ -221,6 +228,7 @@ Image::Select - Perl class for creating random image.
 =item * C<path_to_images>
 
  Path to images.
+ It is required.
  Default value is undef.
 
 =item * C<type>
@@ -257,7 +265,8 @@ Image::Select - Perl class for creating random image.
 
  new():
          No images.
-         Suffix '%s' doesn't supported.
+         Parameter 'path_to_images' is required.
+         Image type '%s' doesn't supported.
          Class::Utils:
                  Unknown parameter '%s'.
 
@@ -269,7 +278,7 @@ Image::Select - Perl class for creating random image.
          Cannot write file to '$path'.
                  Error, %s
          No file '%s'.
-         Suffix '%s' doesn't supported.
+         Image type '%s' doesn't supported.
 
 =head1 EXAMPLE1
 
@@ -280,8 +289,8 @@ Image::Select - Perl class for creating random image.
  # Modules.
  use File::Spec::Functions qw(catfile);
  use File::Temp qw(tempfile tempdir);
- use Image::Select;
  use Image::Random;
+ use Image::Select;
 
  # Temporary directory to random images.
  my $tempdir = tempdir(CLEANUP => 1);
@@ -321,8 +330,8 @@ Image::Select - Perl class for creating random image.
  # Modules.
  use File::Spec::Functions qw(catfile);
  use File::Temp qw(tempfile tempdir);
- use Image::Select;
  use Image::Random;
+ use Image::Select;
 
  # Temporary directory for random images.
  my $tempdir = tempdir(CLEANUP => 1);
@@ -385,6 +394,6 @@ BSD license.
 
 =head1 VERSION
 
-0.01
+0.02
 
 =cut
